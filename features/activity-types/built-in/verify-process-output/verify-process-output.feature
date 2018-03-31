@@ -53,8 +53,6 @@ Feature: verifying the output of the last console command
     Given my workspace contains the file "server.js" with content:
       """
       console.log('one')
-      console.log('two')
-      console.log('three')
       """
     And my source code contains the file "not-so-long-running.md" with content:
       """

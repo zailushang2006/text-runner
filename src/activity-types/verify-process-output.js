@@ -2,6 +2,8 @@
 
 import type { Activity } from '../commands/run/activity.js'
 
+const UnprintedUserError = require('../errors/unprinted-user-error')
+
 // Waits until the currently running console command produces the given output
 module.exports = async function (activity: Activity) {
   activity.formatter.setTitle(
@@ -14,6 +16,11 @@ module.exports = async function (activity: Activity) {
     .filter(line => line)
   for (let line of expectedLines) {
     activity.formatter.output(`waiting for ${line}`)
+    console.log(1111111111111)
+    console.log(global.runningProcess)
+    if (global.runningProcess.ended) {
+      throw new UnprintedUserError('the long-running process has ended')
+    }
     await global.runningProcess.waitForText(line)
   }
 }
