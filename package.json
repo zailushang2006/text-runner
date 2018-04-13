@@ -1,12 +1,12 @@
 {
   "name": "text-runner",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Kevin Goslar",
   "bin": {
     "text-run": "bin/text-run"
   },
   "dependencies": {
-    "array-unique": "0.3.2",
+    "@babel/code-frame": "7.0.0-beta.42",
     "chalk": "2.3.2",
     "cli-cursor": "2.1.0",
     "dashify": "1.0.0",
@@ -17,7 +17,6 @@
     "glob": "7.1.2",
     "interpret": "1.1.0",
     "is-glob": "4.0.0",
-    "js-yaml": "3.10.0",
     "jsdiff-console": "2.2.1",
     "jsonfile": "4.0.0",
     "just-kebab-case": "1.0.0",

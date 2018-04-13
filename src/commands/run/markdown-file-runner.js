@@ -81,10 +81,7 @@ class MarkdownFileRunner {
   }
 
   async _runActivity (activity) {
-    this.formatter.setLines(
-      activity.startLine,
-      activity.endLine != null ? activity.endLine : activity.startLine
-    )
+    this.formatter.setLines(activity.line)
     this.formatter.startActivity(activity.activityTypeName)
     try {
       if (activity.runner.length === 1) {
@@ -98,7 +95,11 @@ class MarkdownFileRunner {
       activity.formatter.success()
     } catch (err) {
       if (isUserError(err)) {
-        throw new UnprintedUserError(err)
+        throw new UnprintedUserError(
+          err.message,
+          activity.filename,
+          activity.line
+        )
       } else {
         // here we have a developer error
         throw err

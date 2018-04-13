@@ -2,19 +2,20 @@
 
 const { cyan, green, magenta } = require('chalk')
 const Formatter = require('./formatter')
+const printCodeFrame = require('../helpers/print-code-frame')
 
 class DotFormatter extends Formatter {
   // A minimalistic formatter, prints dots for each check
 
-  error (errorMessage: string) {
+  error (errorMessage: string, filename?: string, line?: number) {
     super.error(errorMessage)
     var output = ''
     if (this.filePath) output += this.filePath
-    if (this.startLine) output += `:${this.startLine}`
-    if (this.endLine && this.endLine !== this.startLine) { output += `-${this.endLine}` }
+    if (this.line) output += `:${this.line}`
     if (this.filePath) output += ' -- '
     output += errorMessage
     console.log(output)
+    printCodeFrame(this.output, filename, line)
   }
 
   output (text: string | Buffer): boolean {

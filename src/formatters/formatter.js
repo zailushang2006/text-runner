@@ -14,13 +14,12 @@ type Console = {
 class Formatter {
   activityText: string
   console: Console
-  endLine: number
   errorMessage: string
   filePath: string // the path of the documentation file that is currently processed
   filePaths: string[] // the files encountered so far
   inActivity: boolean // whether this formatter is currently processing an action
-  skipping: boolean   // whether the current step is being skipped
-  startLine: number // the line within the documentation file at which the currently processed block starts
+  skipping: boolean // whether the current step is being skipped
+  line: number // the line within the documentation file at which the currently processed block ends
   stderr: WriteStream
   stdout: WriteStream
   stepsCount: number
@@ -52,7 +51,7 @@ class Formatter {
   }
 
   // Called on general errors
-  error (errorMessage: string) {
+  error (errorMessage: string, filename?: string, line?: number) {
     this.errorMessage = errorMessage
     this.inActivity = false
   }
@@ -61,9 +60,8 @@ class Formatter {
     throw new Error('Implement in subclass')
   }
 
-  setLines (startLine: number, endLine: number) {
-    this.startLine = startLine
-    this.endLine = endLine
+  setLines (line: ?number) {
+    if (line != null) this.line = line
   }
 
   skip (activityText: string) {
@@ -79,7 +77,11 @@ class Formatter {
 
   startActivity (activityTypeName: string) {
     if (this.inActivity) {
-      throw new UnprintedUserError('already in a started block')
+      throw new UnprintedUserError(
+        'already in a started block',
+        this.filePath,
+        this.line
+      )
     }
     this.setTitle(activityTypeName)
     this.errorMessage = ''

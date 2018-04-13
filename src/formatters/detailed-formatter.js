@@ -2,7 +2,7 @@
 
 const { bold, cyan, dim, green, magenta, red } = require('chalk')
 const Formatter = require('./formatter')
-const unique = require('array-unique')
+const printCodeFrame = require('../helpers/print-code-frame')
 
 // colorFunction is a better name for functions that add colors to strings
 type colorFunction = (text: string) => string
@@ -10,9 +10,10 @@ type colorFunction = (text: string) => string
 class DetailedFormatter extends Formatter {
   // A detailed formatter, prints output before the step name
 
-  error (errorMessage: string) {
+  error (errorMessage: string, filename?: string, line?: number) {
     super.error(errorMessage)
     this._printActivityHeader(bold, red)
+    printCodeFrame(console.log, filename, line)
   }
 
   output (text: string | Buffer): boolean {
@@ -42,17 +43,15 @@ class DetailedFormatter extends Formatter {
     var text = ''
     if (this.filePath) {
       text += this.filePath
-      if (this.startLine) {
+      if (this.line) {
         text += `:`
-        text += unique([this.startLine, this.endLine])
-          .filter(a => a)
-          .join('-')
+        text += this.line
       }
       text += ' -- '
     }
-    if (this.activityText) text += this.activityText
-    if (this.warningMessage) text += this.warningMessage
-    if (this.errorMessage) text += this.errorMessage
+    text += [this.activityText, this.warningMessage, this.errorMessage]
+      .filter(msg => msg)
+      .join(' - ')
     console.log(this._applyColorFunctions(text, ...colorFunctions))
   }
 
