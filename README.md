@@ -1,3 +1,6 @@
+<!-- logo is from: https://icons8.com/icon/40886/test -->
+<img src="documentation/logo2.png" align="right">
+
 <img src="documentation/logo.png" width="651" height="100" alt="TextRunner - test framework for documentation">
 
 <a href="https://circleci.com/gh/Originate/text-runner">
@@ -20,10 +23,7 @@
 </a>
 <br><br>
 
-<!-- logo is from: https://icons8.com/icon/40886/test -->
-<img src="documentation/logo2.png">
-
-TextRunner is an agile documentation tool.
+TextRunner is an agile documentation tool, in particular a semantic documentation checker.
 It makes documentation executable.
 An example is the text you are reading right now,
 which is verified for correctness by TextRunner.
