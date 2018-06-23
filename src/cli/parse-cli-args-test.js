@@ -1,5 +1,8 @@
+// @flow
 /* eslint no-unused-expressions: 0 */
-const parseCliArgs = require('../../dist/cli/parse-cli-args')
+
+const parseCliArgs = require('../../src/cli/parse-cli-args')
+const { expect } = require('chai')
 
 describe('parse-cli-args', function () {
   context('with unix <node> call', function () {
@@ -75,7 +78,7 @@ describe('parse-cli-args', function () {
     })
 
     it('returns the filename', function () {
-      expect(this.result.file).to.equal('documentation/actions/cd.md')
+      expect(this.result.files).to.equal('documentation/actions/cd.md')
     })
   })
 
@@ -89,7 +92,7 @@ describe('parse-cli-args', function () {
     })
 
     it('returns the filename', function () {
-      expect(this.result.file).to.equal('documentation/actions/cd.md')
+      expect(this.result.files).to.equal('documentation/actions/cd.md')
     })
   })
 
@@ -118,6 +121,20 @@ describe('parse-cli-args', function () {
 
     it('returns the dot formatter option', function () {
       expect(this.result.format).to.equal('dot')
+    })
+  })
+
+  context('--workspace foo/bar', function () {
+    beforeEach(function () {
+      this.result = parseCliArgs(['--workspace', 'foo/bar'])
+    })
+
+    it('returns the "run" command', function () {
+      expect(this.result.command).to.equal('run')
+    })
+
+    it('returns the dot formatter option', function () {
+      expect(this.result.workspace).to.equal('foo/bar')
     })
   })
 })

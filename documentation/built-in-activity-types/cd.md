@@ -6,18 +6,12 @@ that its embedded link or code block points to.
 
 #### Example
 
-Assuming the workspace contains a <a textrun="create-directory">`foo`</a> directory,
-you can change into it via this Markdown code:
-
 <a textrun="run-markdown-in-textrun">
 ```markdown
-<a textrun="cd">
-Let's change into the [foo](foo) directory.
-</a>
+Assuming the workspace contains a <code textrun="create-directory">foo</code> directory,
+you can change into it via this Markdown code:
 
-<a textrun="cd">
-Let's change into the `..` directory.
-</a>
+<code textrun="cd">foo</code>
 ```
 </a>
 
@@ -27,5 +21,5 @@ so that readers of your documentation can click to see it.
 
 #### More info
 
-- [feature specs](../../features/activity-types/built-in/cd/cd.feature)
-- [source code](../../src/activity-types/cd.js)
+- [feature specs](../../features/actions/built-in/cd/cd.feature)
+- [source code](../../src/actions/cd.js)

@@ -2,5 +2,14 @@
 
 // returns a list of all available commands
 module.exports = function (): string[] {
-  return ['add', 'help', 'run', 'setup', 'version']
+  return [
+    'add',
+    'debug',
+    'dynamic',
+    'help',
+    'run',
+    'setup',
+    'static',
+    'version'
+  ]
 }

@@ -1,24 +1,29 @@
-const callArgs = require('../dist/helpers/call-args')
+// @flow
+
+import type { ActionArgs } from '../src/runners/action-args.js'
+
+const callArgs = require('../src/helpers/call-args')
 const ObservableProcess = require('observable-process')
 const path = require('path')
 
-module.exports = async function ({ configuration, formatter, searcher }) {
-  formatter.setTitle('running the created Markdown file in TextRunner')
+module.exports = async function (args: ActionArgs) {
+  args.formatter.name('running the created Markdown file in TextRunner')
 
   var textRunPath = path.join(__dirname, '..', 'bin', 'text-run')
   if (process.platform === 'win32') textRunPath += '.cmd'
   const processor = new ObservableProcess({
-    command: callArgs(textRunPath),
-    cwd: configuration.testDir,
-    stdout: { write: formatter.output },
-    stderr: { write: formatter.output }
+    commands: callArgs(textRunPath),
+    cwd: args.configuration.workspace,
+    stdout: args.formatter.stdout,
+    stderr: args.formatter.stderr
   })
   await processor.waitForEnd()
   if (processor.exitCode !== 0) {
-    formatter.error(
+    args.formatter.error(
       `text-run exited with code ${
         processor.exitCode
       } when processing the created Markdown file`
     )
   }
+  global.consoleCommandOutput = processor.fullOutput()
 }

@@ -7,12 +7,11 @@ Feature: generating a configuration file
   - call "text-run setup" to generate a configuration file
 
 
-  @clionly
   Scenario: running in a directory without configuration file
     When running "text-run setup"
     Then it prints:
       """
-      Create configuration file text-run.yml with default values
+      Created configuration file text-run.yml with default values
       """
     And it creates the file "text-run.yml" with content:
       """
@@ -32,6 +31,9 @@ Feature: generating a configuration file
       # uses ./tmp if false,
       # you can also provide a custom directory path here
       useSystemTempDirectory: false
+
+      # whether to skip tests that require an online connection
+      offline: false
 
       # activity-type specific configuration
       activityTypes:

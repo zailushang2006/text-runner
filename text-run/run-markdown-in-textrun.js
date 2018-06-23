@@ -1,35 +1,35 @@
+// @flow
+
+import type { ActionArgs } from '../src/runners/action-args.js'
+
 /* eslint no-irregular-whitespace: 0 */
 
-const callArgs = require('../dist/helpers/call-args')
+const callArgs = require('../src/helpers/call-args')
 const fs = require('fs')
 const ObservableProcess = require('observable-process')
 const path = require('path')
 const debug = require('debug')('text-runner:run-markdown-in-text-run')
 
-module.exports = async function ({ configuration, formatter, searcher }) {
-  formatter.setTitle('verify the inline markdown works in TextRunner')
-  const markdown = searcher.tagContent('fence')
-  const filename = path.join(configuration.testDir, '1.md')
-  const filecontent = markdown.replace(/​/g, '')
-  debug(`writing file '${filename}' with content:`)
-  debug(filecontent)
-  fs.writeFileSync(filename, filecontent)
+module.exports = async function (args: ActionArgs) {
+  args.formatter.name('verify the inline markdown works in TextRunner')
+  const filePath = path.join(args.configuration.workspace, '1.md')
+  const markdown = args.nodes.textInNodeOfType('fence')
+  const fileContent = markdown.replace(/​/g, '')
+  debug(`writing file '${filePath}' with content:`)
+  debug(fileContent)
+  fs.writeFileSync(filePath, fileContent)
 
-  // we need to configure the TextRunner instance called by our own Markdown to run its tests in its current directory,
-  // because in README.md we call it to run Markdown that verifies Markdown we ran manually.
-  // So TextRunner that verifies Markdown in README.md must run in the same directory as the other Markdown in README.md.
-  fs.writeFileSync(
-    path.join(configuration.testDir, 'text-run.yml'),
-    "useSystemTempDirectory: '.'"
-  )
-
-  var textRunPath = path.join(__dirname, '..', 'bin', 'text-run')
+  var textRunPath = path.join(args.configuration.sourceDir, 'bin', 'text-run')
   if (process.platform === 'win32') textRunPath += '.cmd'
+  const trArgs = callArgs(textRunPath)
+  trArgs[trArgs.length - 1] += ` --keep-tmp --workspace ${
+    args.configuration.workspace
+  }`
   const processor = new ObservableProcess({
-    commands: callArgs(textRunPath),
-    cwd: configuration.testDir,
-    stdout: { write: formatter.output },
-    stderr: { write: formatter.output }
+    commands: trArgs,
+    cwd: args.configuration.workspace,
+    stdout: args.formatter.stdout,
+    stderr: args.formatter.stderr
   })
   await processor.waitForEnd()
   debug(processor.fullOutput())
@@ -37,7 +37,7 @@ module.exports = async function ({ configuration, formatter, searcher }) {
     throw new Error(
       `text-run exited with code ${
         processor.exitCode
-      } when processing this markdown block.\nOutput:\n${processor.fullOutput()}`
+      } when processing this markdown block.`
     )
   }
 }

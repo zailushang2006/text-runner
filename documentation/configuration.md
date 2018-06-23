@@ -33,6 +33,9 @@ classPrefix: 'textrun'
 # you can also provide a custom directory path here
 useSystemTempDirectory: false
 
+# whether to skip tests that require an online connection
+offline: false
+
 # activity-type specific configuration
 activityTypes:
   runConsoleCommand:
@@ -45,6 +48,6 @@ activityTypes:
 
 Read more about:
 - the [built-in activity types](built-in-activity-types)
-- writing your own [user-defined activity types](user-defined-activity-types.md)
+- writing your own [user-defined activities](user-defined-activities.md)
 - [installing](installation.md) TextRunner
 

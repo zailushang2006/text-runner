@@ -1,10 +1,10 @@
 // @flow
 
+import type { Activity } from '../activity-list/activity.js'
 import type { WriteStream } from 'observable-process'
 
-const { bold, green, magenta } = require('chalk')
-const Time = require('time-diff')
-const UnprintedUserError = require('../errors/unprinted-user-error')
+const humanize = require('humanize-string')
+const StatsCounter = require('../runners/stats-counter.js')
 
 type Console = {
   log(text: string): void
@@ -12,122 +12,60 @@ type Console = {
 
 // Base class for formatters
 class Formatter {
-  activityText: string
+  activity: Activity
   console: Console
-  errorMessage: string
-  filePath: string // the path of the documentation file that is currently processed
-  filePaths: string[] // the files encountered so far
-  inActivity: boolean // whether this formatter is currently processing an action
-  skipping: boolean // whether the current step is being skipped
-  line: number // the line within the documentation file at which the currently processed block ends
+  sourceDir: string
+  statsCounter: StatsCounter
   stderr: WriteStream
   stdout: WriteStream
-  stepsCount: number
-  time: Time
-  warningMessage: string
-  warningsCount: number
+  output: string
+  title: string
+  skipped: boolean
+  // TODO: remove this?
+  warned: boolean
 
-  constructor () {
-    // Note: I have to define these attributes here,
-    //       since doing so at the class level
-    //       binds them to the class scope for some reason
-    this.activityText = ''
-    this.errorMessage = ''
-    this.filePaths = []
-    this.inActivity = false
-    this.stepsCount = 0
-    this.skipping = false
-    this.warningsCount = 0
-    this.stdout = { write: this.output }
-    this.stderr = { write: this.output }
-    this.console = {
-      log: (text: string) => {
-        this.output(`${text}\n`)
-      }
-    }
-
-    this.time = new Time()
-    this.time.start('formatter')
+  constructor (
+    activity: Activity,
+    sourceDir: string,
+    statsCounter: StatsCounter
+  ) {
+    this.activity = activity
+    this.statsCounter = statsCounter
+    this.stdout = { write: this.log.bind(this) }
+    this.stderr = { write: this.log.bind(this) }
+    this.output = ''
+    this.title = humanize(activity.type)
+    this.sourceDir = sourceDir
+    this.skipped = false
+    this.warned = false
   }
 
-  // Called on general errors
-  error (errorMessage: string, filename?: string, line?: number) {
-    this.errorMessage = errorMessage
-    this.inActivity = false
+  error (errorMessage: string) {
+    this.statsCounter.error()
   }
 
-  output (text: string | Buffer): boolean {
-    throw new Error('Implement in subclass')
+  log (text: string | Buffer): boolean {
+    this.output += text.toString()
+    return false
   }
 
-  setLines (line: ?number) {
-    if (line != null) this.line = line
+  skip (message: string) {
+    this.skipped = true
+    this.statsCounter.skip()
   }
 
-  skip (activityText: string) {
-    if (activityText) this.activityText = activityText
-    this.inActivity = false
-    this.skipping = true
+  success () {
+    this.statsCounter.success()
   }
 
-  // Called when we start performing an activity that was defined in a block
-  setTitle (activityText: string) {
-    this.activityText = activityText
+  // allows the user to set a new name for this step
+  name (newTitle: string) {
+    this.title = newTitle
   }
 
-  startActivity (activityTypeName: string) {
-    if (this.inActivity) {
-      throw new UnprintedUserError(
-        'already in a started block',
-        this.filePath,
-        this.line
-      )
-    }
-    this.setTitle(activityTypeName)
-    this.errorMessage = ''
-    this.warningMessage = ''
-    this.stepsCount += 1
-    this.inActivity = true
-    this.skipping = false
-  }
-
-  // called when we start processing a markdown file
-  startFile (filePath: string) {
-    this.filePath = filePath
-    if (!this.filePaths.includes(filePath)) {
-      this.filePaths.push(filePath)
-    }
-  }
-
-  // called when the last started activity finished successful
-  // optionally allows to define the final text to be displayed
-  success (activityText?: string) {
-    if (activityText) this.activityText = activityText
-    this.inActivity = false
-  }
-
-  // called when the whole test suite passed
-  suiteSuccess () {
-    if (this.stepsCount === 0) {
-      this.warning('no activities found')
-      return
-    }
-    var text = green(
-      `\nSuccess! ${this.stepsCount} blocks in ${this.filePaths.length} files`
-    )
-    if (this.warningsCount > 0) {
-      text += green(', ')
-      text += magenta(`${this.warningsCount} warnings`)
-    }
-    text += green(`, ${this.time.end('formatter')}`)
-    console.log(bold(text))
-  }
-
-  // Called on general warnings
   warning (warningMessage: string) {
-    this.warningMessage = warningMessage
-    this.warningsCount += 1
-    this.inActivity = false
+    this.warned = true
+    this.statsCounter.warning()
   }
 }
 

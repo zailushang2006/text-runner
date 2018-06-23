@@ -39,11 +39,7 @@ Given(
   function () {
     fs.writeFileSync(
       path.join(this.rootDir, '1.md'),
-      `
-    <a textrun="verify-source-contains-directory">
-        [.](.)
-      </a>
-      `
+      `<code textrun="cd">.</code>`
     )
   }
 )
@@ -82,14 +78,14 @@ Given('my documentation is starting the {string} example', function (example) {
     <a textrun="start-console-command">
       \`\`\`
       node ${path.join(
-        __dirname,
-        '..',
-        '..',
-        'documentation',
-        'examples',
-        'long-running',
-        'server.js'
-      )}
+    __dirname,
+    '..',
+    '..',
+    'documentation',
+    'examples',
+    'long-running',
+    'server.js'
+  )}
       \`\`\`
       </a>
       `
@@ -105,17 +101,25 @@ Given('my source code contains the file {string}', function (fileName) {
   fs.writeFileSync(path.join(this.rootDir, fileName), 'content')
 })
 
-Given('my workspace contains the file {string}', function (fileName) {
-  mkdirp.sync(path.join(this.rootDir, 'tmp', path.dirname(fileName)))
-  fs.writeFileSync(path.join(this.rootDir, 'tmp', fileName), 'content')
-})
-
 Given('my source code contains the file {string} with content:', function (
   fileName,
   content
 ) {
   mkdirp.sync(path.join(this.rootDir, path.dirname(fileName)))
   fs.writeFileSync(path.join(this.rootDir, fileName), content)
+})
+
+Given('my workspace contains the file {string}', function (fileName) {
+  mkdirp.sync(path.join(this.rootDir, 'tmp', path.dirname(fileName)))
+  fs.writeFileSync(path.join(this.rootDir, 'tmp', fileName), 'content')
+})
+
+Given('my workspace contains a file {string} with content {string}', function (
+  fileName,
+  content
+) {
+  mkdirp.sync(path.join(this.rootDir, 'tmp', path.dirname(fileName)))
+  fs.writeFileSync(path.join(this.rootDir, 'tmp', fileName), content)
 })
 
 Given('my workspace contains testable documentation', function () {
@@ -136,7 +140,7 @@ Given('my workspace contains the HelloWorld activity', function () {
   fs.writeFileSync(
     path.join(this.rootDir, 'text-run', 'hello-world.js'),
     `
-    module.exports = function ({formatter}) { formatter.output('Hello World!') }`
+    module.exports = function ({formatter}) { formatter.log('Hello World!') }`
   )
 })
 

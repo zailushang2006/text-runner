@@ -1,67 +1,66 @@
 // @flow
 
-import type Formatter from './formatters/formatter.js'
 import type { CliArgTypes } from './cli/cli-arg-types.js'
 
-const ActivityTypeManager = require('./commands/run/activity-type-manager.js')
 const { red } = require('chalk')
-const commandPath = require('./commands/command-path')
-const Configuration = require('./configuration/configuration.js')
-const FormatterManager = require('./formatters/formatter-manager')
 const fs = require('fs')
-const hasCommand = require('./commands/has-command')
-const PrintedUserError = require('./errors/printed-user-error.js')
-const UnprintedUserError = require('./errors/unprinted-user-error.js')
+const loadConfiguration = require('./configuration/load-configuration.js')
+
+const addCommand = require('./commands/add.js')
+const debugCommand = require('./commands/debug.js')
+const dynamicCommand = require('./commands/dynamic.js')
+const helpCommand = require('./commands/help.js')
+const runCommand = require('./commands/run.js')
+const setupCommand = require('./commands/setup.js')
+const staticCommand = require('./commands/static.js')
+const versionCommand = require('./commands/version.js')
 
 // Tests the documentation in the given directory
-module.exports = async function (value: {
-  command: string,
-  file?: string,
-  offline?: boolean,
-  exclude?: string,
-  format?: Formatter
-}) {
-  const configFileName = fs.existsSync('text-run.yml') ? 'text-run.yml' : ''
-  const textRunner = new TextRunner(
-    { offline: value.offline, exclude: value.exclude, format: value.format },
-    configFileName
-  )
-  await textRunner.execute(value.command, value.file)
+module.exports = async function (
+  cmdLineArgs: CliArgTypes
+): Promise<Array<Error>> {
+  var configuration
+  try {
+    configuration = loadConfiguration(configFileName(), cmdLineArgs)
+    const commandName = cmdLineArgs.command
+    var errors
+    switch (commandName) {
+      case 'add':
+        errors = await addCommand(cmdLineArgs.files)
+        return errors
+      case 'debug':
+        errors = await debugCommand(configuration)
+        return errors
+      case 'dynamic':
+        errors = await dynamicCommand(configuration)
+        return errors
+      case 'help':
+        await helpCommand()
+        return []
+      case 'run':
+        errors = await runCommand(configuration)
+        return errors
+      case 'setup':
+        await setupCommand()
+        return []
+      case 'static':
+        errors = await staticCommand(configuration)
+        return errors
+      case 'version':
+        await versionCommand()
+        return []
+      default:
+        console.log(red(`unknown command: ${red(commandName)}`))
+        return []
+    }
+  } catch (err) {
+    if (configuration && configuration.sourceDir) {
+      process.chdir(configuration.sourceDir)
+    }
+    return [err]
+  }
 }
 
-class TextRunner {
-  constructorArgs: CliArgTypes
-  configuration: Configuration
-  formatter: Formatter
-  activityTypesManager: ActivityTypeManager
-
-  constructor (constructorArgs: CliArgTypes, configPath) {
-    this.constructorArgs = constructorArgs
-    this.configuration = new Configuration(configPath, this.constructorArgs)
-    this.formatter = new FormatterManager().getFormatter(
-      this.configuration.get('format')
-    )
-    this.activityTypesManager = new ActivityTypeManager(
-      this.formatter,
-      this.configuration
-    )
-  }
-
-  // Tests the documentation according to the given command and arguments
-  async execute (command: string, file?: string) {
-    try {
-      if (!hasCommand(command)) {
-        throw new UnprintedUserError(`unknown command: ${red(command)}`)
-      }
-      const CommandClass = require(commandPath(command))
-      await new CommandClass(this).run(file)
-    } catch (err) {
-      if (err instanceof UnprintedUserError) {
-        this.formatter.error(err.message, err.filePath, err.line)
-        throw new PrintedUserError(err)
-      } else {
-        throw err
-      }
-    }
-  }
+function configFileName (): string {
+  return fs.existsSync('text-run.yml') ? 'text-run.yml' : ''
 }

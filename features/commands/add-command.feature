@@ -7,7 +7,6 @@ Feature: adding new handler functions
   - run "text-run add <step-name>" to generate a new handler function for the given block
 
 
-  @clionly
   Scenario: adding a new step
     When running "text-run add new-step"
     Then it generates the file "text-run/new-step.js" with content:
@@ -18,9 +17,9 @@ Feature: adding new handler functions
         console.log(activity.nodes)
 
         // capture content from the document
-        // const content = searcher.tagContent('boldtext')
+        // const content = activity.searcher.tagContent('boldtext')
         // do something with the content
-        // formatter.output(content)
+        // formatter.log(content)
       }
 
       """

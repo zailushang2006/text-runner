@@ -1,4 +1,3 @@
-@clionly
 Feature: display total test time
 
   As a documentation writer
@@ -13,5 +12,5 @@ Feature: display total test time
     When running text-run
     Then it prints:
       """
-      \d blocks in \d files, \d+m?s
+      \d activities in \d files, \d+m?s
       """

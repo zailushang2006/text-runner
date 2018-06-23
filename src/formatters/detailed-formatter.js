@@ -1,68 +1,46 @@
 // @flow
 
-const { bold, cyan, dim, green, magenta, red } = require('chalk')
+const { dim, green, magenta, red } = require('chalk')
 const Formatter = require('./formatter')
+const path = require('path')
 const printCodeFrame = require('../helpers/print-code-frame')
-
-// colorFunction is a better name for functions that add colors to strings
-type colorFunction = (text: string) => string
 
 class DetailedFormatter extends Formatter {
   // A detailed formatter, prints output before the step name
 
-  error (errorMessage: string, filename?: string, line?: number) {
+  error (errorMessage: string) {
     super.error(errorMessage)
-    this._printActivityHeader(bold, red)
-    printCodeFrame(console.log, filename, line)
+    console.log(dim(this.output))
+    process.stdout.write(red(`${this.activity.file}:${this.activity.line} -- `))
+    console.log(errorMessage)
+    const filePath = path.join(this.sourceDir, this.activity.file)
+    printCodeFrame(console.log, filePath, this.activity.line)
   }
 
-  output (text: string | Buffer): boolean {
-    console.log(dim(text.toString().trim()))
-    return false
+  skip (message: string) {
+    super.skip(message)
+    console.log(dim(this.output))
+    console.log(
+      magenta(`${this.activity.file}:${this.activity.line} -- ${message}`)
+    )
   }
 
-  skip (activityText: string) {
-    super.skip(activityText)
-    this._printActivityHeader(cyan)
-  }
-
-  success (activityText?: string) {
-    super.success(activityText)
-    if (!this.skipping) {
-      this._printActivityHeader(green)
-    }
+  success () {
+    super.success()
+    if (this.output) console.log(dim(this.output))
+    console.log(
+      green(`${this.activity.file}:${this.activity.line} -- ${this.title}`)
+    )
   }
 
   warning (warningMessage: string) {
     super.warning(warningMessage)
-    this.activityText = ''
-    this._printActivityHeader(bold, magenta)
-  }
-
-  _printActivityHeader (...colorFunctions: Array<colorFunction>) {
-    var text = ''
-    if (this.filePath) {
-      text += this.filePath
-      if (this.line) {
-        text += `:`
-        text += this.line
-      }
-      text += ' -- '
-    }
-    text += [this.activityText, this.warningMessage, this.errorMessage]
-      .filter(msg => msg)
-      .join(' - ')
-    console.log(this._applyColorFunctions(text, ...colorFunctions))
-  }
-
-  _applyColorFunctions (
-    text: string,
-    ...colorFunctions: Array<colorFunction>
-  ): string {
-    for (let colorFunction of colorFunctions) {
-      text = colorFunction(text)
-    }
-    return text
+    console.log(dim(this.output))
+    console.log(
+      magenta(
+        `${this.activity.file}:${this.activity.line} -- ${warningMessage}`
+      )
+    )
   }
 }
 

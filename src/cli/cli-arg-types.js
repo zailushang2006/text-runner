@@ -1,9 +1,9 @@
 // @flow
 
-import Formatter from '../formatters/formatter.js'
-
 export type CliArgTypes = {
+  command: string,
   exclude?: string,
-  format?: Formatter,
+  files?: string,
+  format?: string,
   offline?: boolean
 }
