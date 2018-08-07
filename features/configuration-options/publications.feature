@@ -123,6 +123,7 @@ Feature: Folder Mapping
     Given my source code contains the file "1.md" with content:
       """
       [link to hello in 2.md](/2#hello)
+      [link to 2.md](2)
       [link to blog post 3.md](/blog/3.html)
       """
     And my source code contains the file "text-run.yml" with content:
@@ -134,6 +135,7 @@ Feature: Folder Mapping
         - localPath: /content/posts
           publicPath: /blog
           publicExtension: .html
+      defaultFile: index.md
       """
     And my source code contains the file "content/posts/3.md" with content:
       """
@@ -145,8 +147,12 @@ Feature: Folder Mapping
       | LINE     | 1                                  |
       | MESSAGE  | link to heading content/2.md#hello |
     And it signals:
+      | FILENAME | 1.md                            |
+      | LINE     | 2                               |
+      | MESSAGE  | link to local file content/2.md |
+    And it signals:
       | FILENAME | 1.md                                  |
-      | LINE     | 2                                     |
+      | LINE     | 3                                     |
       | MESSAGE  | link to local file content/posts/3.md |
 
   Scenario: relative links within a publicized folder
