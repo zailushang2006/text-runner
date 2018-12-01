@@ -11,7 +11,7 @@ Feature: setting the root directory of the documentation base to test
       """
       <a textrun="run-javascript">
         ```
-        console.log(process.cwd())
+        console.log(`CWD is ${process.cwd()}.`)
         ```
       </a>
       """
@@ -19,3 +19,7 @@ Feature: setting the root directory of the documentation base to test
   Scenario: default behavior
     When running text-run
     Then it prints the current working directory as the root dir
+
+  Scenario: custom rootDir Given
+    When running text-run with the argument { "rootDir": "c:\\" }
+    Then it prints "c:\\" as the current working directory

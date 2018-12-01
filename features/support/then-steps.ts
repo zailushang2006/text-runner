@@ -40,8 +40,16 @@ Then('it prints:', function(expectedText) {
   this.verifyPrints(expectedText)
 })
 
+Then('it prints {string} as the current working directory', function(
+  expectedDir
+) {
+  const expected = `CWD is ${expectedDir}.`
+  expect(this.output).to.include(path.join(expected))
+})
+
 Then('it prints the current working directory as the root dir', function() {
-  expect(this.output).to.include(path.join(process.cwd(), 'tmp'))
+  const expected = `CWD is ${path.join(process.cwd(), 'tmp', 'tmp')}.`
+  expect(this.output).to.include(expected)
 })
 
 Then('it prints the error message:', function(expectedText) {
