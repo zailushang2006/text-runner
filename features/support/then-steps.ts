@@ -40,6 +40,10 @@ Then('it prints:', function(expectedText) {
   this.verifyPrints(expectedText)
 })
 
+Then('it prints the current working directory as the root dir', function() {
+  expect(this.output).to.include(path.join(process.cwd(), 'tmp'))
+})
+
 Then('it prints the error message:', function(expectedText) {
   this.verifyErrormessage(expectedText)
 })
