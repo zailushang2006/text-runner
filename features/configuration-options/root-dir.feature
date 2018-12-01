@@ -1,3 +1,4 @@
+@debug
 Feature: setting the root directory of the documentation base to test
 
     When running Text-Runner inside a bot
@@ -7,14 +8,7 @@ Feature: setting the root directory of the documentation base to test
   - the configuration option "rootDir" allows to provide a different absolute root directory
 
   Background:
-    Given my source code contains the file "print-dir.md" with content:
-      """
-      <a textrun="run-javascript">
-        ```
-        console.log(`CWD is ${process.cwd()}.`)
-        ```
-      </a>
-      """
+    Given I am in a directory that contains the "print-config" example
 
   Scenario: default behavior
     When running text-run
