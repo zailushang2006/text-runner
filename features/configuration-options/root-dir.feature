@@ -18,7 +18,7 @@ Feature: setting the root directory of the documentation base to test
       """
 
   Scenario: run via CLI
-    When running "text-run --root-dir ../testdir" inside the "workdir" folder
+    When running "text-run --root ../testdir" inside the "workdir" folder
     Then it runs 1 test
 
   Scenario: run via API
