@@ -18,9 +18,6 @@
 <a href="https://david-dm.org/originate/text-runner#info=devDependencies">
   <img src="https://david-dm.org/originate/text-runner/dev-status.svg" />
 </a>
-<a href="https://snyk.io/test/github/Originate/text-runner">
-  <img src="https://snyk.io/test/github/Originate/text-runner/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/Originate/text-runner" style="max-width:100%;" />
-</a>
 <br><br>
 
 TextRunner is an agile documentation tool, in particular a semantic documentation checker.
@@ -33,17 +30,15 @@ It can read and understand (if you tell it how)
 any form of plain text in any human language as well as
 complex data in tables, bullet point lists, and embedded images.
 
-
 #### Use cases
 
-- __evergreen tutorials:__
+- **evergreen tutorials:**
   your documentation is always correct,
   whether you change it or the product it describes
-- __[semantic versioning](http://semver.org):__
+- **[semantic versioning](http://semver.org):**
   know whether a product change affects documented behavior
-- __[readme-driven development](http://tom.preston-werner.com/2010/08/23/readme-driven-development.html):__
+- **[readme-driven development](http://tom.preston-werner.com/2010/08/23/readme-driven-development.html):**
   documentation is your product prototype and drives its implementation
-
 
 #### More info
 

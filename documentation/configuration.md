@@ -2,7 +2,6 @@
 
 You can configure TextRunner via command-line options or a configuration file.
 
-
 ## Creating a configuration file
 
 To scaffold a config file, open a terminal,
@@ -12,12 +11,13 @@ go to the folder where you want to configure TextRunner, and run:
 
 ```
 $ text-run setup
-````
+```
+
 </a>
 
 This creates a configuration file called
 <a textrun="verify-workspace-file-content">
-__text-run.yml__ that looks like this:
+**text-run.yml** that looks like this:
 
 ```yml
 # white-list for files to test
@@ -28,7 +28,7 @@ files: '**/*.md'
 
 # black-list of files not to test
 # This is applied after the white-list above.
-exclude:
+exclude: ''
 
 # the formatter to use (detailed, dot)
 format: detailed
@@ -63,10 +63,9 @@ offline: false
 activityTypes:
   runConsoleCommand:
     globals: {}
-````
+```
 
 </a>
-
 
 ## Using a custom configuration file
 
@@ -80,6 +79,7 @@ $ text-run --config my-config.yml
 <hr>
 
 Read more about:
+
 - the [built-in activity types](built-in-activity-types)
 - writing your own [user-defined activities](user-defined-activities.md)
 - [installing](installation.md) TextRunner

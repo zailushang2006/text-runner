@@ -3,9 +3,7 @@ exclude: 'documentation/examples'
 format: dot
 useSystemTempDirectory: true
 
-
 actions:
-
   runConsoleCommand:
     globals:
       'text-run': 'bin/text-run'

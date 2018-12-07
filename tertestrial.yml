@@ -1,5 +1,4 @@
 actions:
-
   - match:
     command: 'make spec'
 
