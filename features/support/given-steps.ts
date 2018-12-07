@@ -69,11 +69,6 @@ Given(
   }
 )
 
-Given('I am in the {string} folder', function(dirName) {
-  mkdirp.sync(path.join(this.rootDir, dirName))
-  this.rootDir = dirName
-})
-
 Given('my source code contains the directory {string}', function(dirName) {
   mkdirp.sync(path.join(this.rootDir, dirName))
 })

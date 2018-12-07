@@ -16,10 +16,10 @@ Feature: setting the root directory of the documentation base to test
         ```
       </a>
       """
-    And I am in the "workdir" folder
 
   Scenario: run via CLI
-    When running "text-run --root-dir ../workdir"
+    When running "text-run --root-dir ../testdir" inside the "workdir" folder
+    Then it runs 1 test
 
   Scenario: run via API
     When running text-run with the arguments { "rootDir": "../workdir" }

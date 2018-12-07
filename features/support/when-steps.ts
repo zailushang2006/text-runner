@@ -1,4 +1,5 @@
 import { When } from 'cucumber'
+import mkdirp from 'mkdirp'
 import ncp from 'ncp'
 import path from 'path'
 import util from 'util'
@@ -29,6 +30,21 @@ When(/^(trying to run|running) "([^"]*)"$/, async function(
   await this.execute({ command, cwd: this.rootDir, expectError })
   finish(expectError, this.process.error || this.process.exitCode)
 })
+
+When(
+  /^(trying to run|running) "([^"]*)" inside the "([^"]*)" folder$/,
+  async function(tryingText, command, dirName) {
+    console.log(this.rootDir)
+    const args = {
+      command,
+      expectError: determineExpectError(tryingText),
+      rootDir: path.join(this.rootDir, dirName)
+    }
+    mkdirp.sync(args.rootDir)
+    await this.execute(args)
+    finish(args.expectError, this.process.error || this.process.exitCode)
+  }
+)
 
 When(/^(trying to run|running) text-run$/, async function(tryingText) {
   const expectError = determineExpectError(tryingText)

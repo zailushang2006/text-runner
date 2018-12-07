@@ -15,7 +15,7 @@ const World = function() {
 
   this.execute = async function(params) {
     const args: any = {}
-    args.cwd = this.rootDir
+    args.cwd = params.rootDir || this.rootDir
     args.env = {}
     this.output = ''
     if (this.verbose) {
