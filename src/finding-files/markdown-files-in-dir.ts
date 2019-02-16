@@ -2,7 +2,7 @@ import glob from 'glob'
 import AbsoluteFilePath from '../domain-model/absolute-file-path'
 
 // Returns all the markdown files in this directory and its children
-export default function markdownFilesInDir(
+export default function markdownFilesInDir (
   dirName: string
 ): AbsoluteFilePath[] {
   const files = glob.sync(`${dirName}/**/*.md`)

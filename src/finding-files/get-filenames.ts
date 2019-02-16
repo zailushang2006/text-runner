@@ -14,14 +14,14 @@ import removeExcludedFiles from './remove-excluded-files'
 const debug = deb('text-runner:run-command')
 
 // Returns the name of all files/directories that match the given glob
-export default function(config: Configuration): AbsoluteFilePath[] {
+export default function (config: Configuration): AbsoluteFilePath[] {
   let filenames = getFiles(config)
   filenames = removeExcludedFiles(filenames, config.exclude)
   debugFilenames(filenames)
   return filenames
 }
 
-function getFiles(config: Configuration): AbsoluteFilePath[] {
+function getFiles (config: Configuration): AbsoluteFilePath[] {
   if (config.fileGlob === '') {
     return allMarkdownFiles(config.fileGlob)
   } else if (hasDirectory(config.fileGlob)) {
@@ -37,7 +37,7 @@ function getFiles(config: Configuration): AbsoluteFilePath[] {
   }
 }
 
-function debugFilenames(filenames: AbsoluteFilePath[]) {
+function debugFilenames (filenames: AbsoluteFilePath[]) {
   debug('testing files:')
   for (const filename of filenames) {
     debug(`  * ${filename.platformified()}`)

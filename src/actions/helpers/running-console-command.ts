@@ -3,14 +3,14 @@ import { ObservableProcess } from 'observable-process'
 // Provides global access to the currently running console command
 class RunningConsoleCommand {
   // Returns the currently running console command
-  static instance(): ObservableProcess {
+  public static instance (): ObservableProcess {
     if (!instance) {
       throw new Error()
     }
     return instance
   }
 
-  static set(process: ObservableProcess) {
+  public static set (process: ObservableProcess) {
     instance = process
   }
 }

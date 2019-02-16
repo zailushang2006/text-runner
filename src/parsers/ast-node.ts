@@ -2,7 +2,7 @@ import AbsoluteFilePath from '../domain-model/absolute-file-path'
 
 // A node in the standardized Markdown/HTML AST
 export default class AstNode {
-  static scaffold(data: any = {}): AstNode {
+  public static scaffold (data: any = {}): AstNode {
     if (typeof data.file === 'string') {
       data.file = new AbsoluteFilePath(data.file)
     }
@@ -15,14 +15,14 @@ export default class AstNode {
       type: data.type || 'type'
     })
   }
-  type: string // markdown type of AST node
-  tag: string // HTML type of AST node
-  file: AbsoluteFilePath // the file in which this AstNode occurs
-  line: number // the line in the file at which this AST node occurs
-  content: string // textual content of this AST node
-  attributes: { [key: string]: string } // the attributes of the node
+  public type: string // markdown type of AST node
+  public tag: string // HTML type of AST node
+  public file: AbsoluteFilePath // the file in which this AstNode occurs
+  public line: number // the line in the file at which this AST node occurs
+  public content: string // textual content of this AST node
+  public attributes: { [key: string]: string } // the attributes of the node
 
-  constructor(data: {
+  constructor (data: {
     type: string
     tag: string
     file: AbsoluteFilePath
@@ -39,14 +39,14 @@ export default class AstNode {
   }
 
   // Returns the type of the corresponding ending node
-  endType(): string {
+  public endType (): string {
     if (!this.isOpeningNode()) {
       throw new Error('not an opening node')
     }
     return this.type.replace('open', '') + 'close'
   }
 
-  htmlLinkTarget(): string | null {
+  public htmlLinkTarget (): string | null {
     if (this.content == null) {
       return null
     }
@@ -57,11 +57,11 @@ export default class AstNode {
     return matches ? matches[1] : null
   }
 
-  isOpeningNode(): boolean {
+  public isOpeningNode (): boolean {
     return this.type.endsWith('_open')
   }
 
-  isClosingNode(): boolean {
+  public isClosingNode (): boolean {
     return this.type.endsWith('_close')
   }
 }

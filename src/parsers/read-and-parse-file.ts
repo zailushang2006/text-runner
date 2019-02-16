@@ -4,7 +4,7 @@ import AbsoluteFilePath from '../domain-model/absolute-file-path'
 import AstNodeList from '../parsers/ast-node-list'
 import parseMarkdown from '../parsers/markdown/parse-markdown'
 
-export default (async function(
+export default (async function (
   filename: AbsoluteFilePath
 ): Promise<AstNodeList> {
   const content = (await fs.readFile(filename.value, {

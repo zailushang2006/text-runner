@@ -1,5 +1,5 @@
 // returns a list of all available commands
-export default function(): string[] {
+export default function (): string[] {
   return [
     'add',
     'debug',

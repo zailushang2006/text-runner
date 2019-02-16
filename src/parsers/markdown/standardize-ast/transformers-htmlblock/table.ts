@@ -9,7 +9,7 @@ import OpenTagTracker from '../../helpers/open-tag-tracker'
 
 const xml2jsp = util.promisify(xml2js.parseString)
 
-export default async function transformTable(
+export default async function transformTable (
   node: any,
   openTags: OpenTagTracker,
   file: AbsoluteFilePath,
@@ -90,7 +90,7 @@ export default async function transformTable(
   return result
 }
 
-function parseRows(
+function parseRows (
   block: any,
   result: AstNodeList,
   file: AbsoluteFilePath,

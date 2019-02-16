@@ -1,27 +1,27 @@
 import { ObservableProcess } from 'observable-process'
 
 export default class RunningProcess {
-  static instance(): RunningProcess {
+  public static instance (): RunningProcess {
     return instance
   }
-  process: ObservableProcess | null
+  public process: ObservableProcess | null
 
-  constructor() {
+  constructor () {
     this.process = null
   }
 
-  hasProcess(): boolean {
+  public hasProcess (): boolean {
     return this.process != null
   }
-  kill() {
+  public kill () {
     this.process && this.process.kill()
   }
 
-  reset() {
+  public reset () {
     this.process = null
   }
 
-  set(process: ObservableProcess) {
+  public set (process: ObservableProcess) {
     this.process = process
   }
 }

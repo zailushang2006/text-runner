@@ -12,25 +12,25 @@ import RelativeLink from './relative-link'
 // all the way from the root directory
 // (i.e. a link starting with '/')
 export default class AbsoluteLink {
-  value: string
+  public value: string
 
-  constructor(publicPath: string) {
+  constructor (publicPath: string) {
     this.value = addLeadingSlash(removeDoubleSlash(unixify(publicPath)))
   }
 
   // Returns the anchor part of this link
-  anchor(): string {
+  public anchor (): string {
     return this.value.split('#')[1] || ''
   }
 
   // Returns a new link that consists of this link
   // with the given relative link appended
-  append(segment: RelativeLink): AbsoluteLink {
+  public append (segment: RelativeLink): AbsoluteLink {
     return new AbsoluteLink(straightenLink(this.value + '/' + segment.value))
   }
 
   // Returns a link to the containing directory
-  directory(): AbsoluteLink {
+  public directory (): AbsoluteLink {
     const withoutAnchor = this.withoutAnchor()
     if (withoutAnchor.isLinkToDirectory()) {
       return withoutAnchor
@@ -40,22 +40,25 @@ export default class AbsoluteLink {
     )
   }
 
-  hasAnchor(): boolean {
+  public hasAnchor (): boolean {
     return this.anchor() !== ''
   }
 
   // Returns whether this link has the given extension
-  hasExtension(extension: string): boolean {
+  public hasExtension (extension: string): boolean {
     return path.extname(this.value) === addLeadingDotUnlessEmpty(extension)
   }
 
   // Returns whether this link points to a directory
-  isLinkToDirectory(): boolean {
+  public isLinkToDirectory (): boolean {
     return this.value.endsWith('/')
   }
 
   // Returns the file path that this link has on the local filesystem
-  localize(publications: Publications, defaultFile: string): AbsoluteFilePath {
+  public localize (
+    publications: Publications,
+    defaultFile: string
+  ): AbsoluteFilePath {
     const publication = publications.publicationForLink(this)
     let result = publication
       ? publication.resolve(this.urlDecoded(), defaultFile)
@@ -70,22 +73,22 @@ export default class AbsoluteLink {
 
   // Returns a link where the old enclosing directory is replaced
   // with the new enclosing directory
-  rebase(oldPath: string, newPath: string): AbsoluteLink {
+  public rebase (oldPath: string, newPath: string): AbsoluteLink {
     const re = new RegExp('^' + oldPath)
     return new AbsoluteLink(this.value.replace(re, newPath))
   }
 
-  urlDecoded(): AbsoluteLink {
+  public urlDecoded (): AbsoluteLink {
     return new AbsoluteLink(decodeURI(this.value))
   }
 
   // Returns a link that contains the given anchor
-  withAnchor(anchor: string): AbsoluteLink {
+  public withAnchor (anchor: string): AbsoluteLink {
     return new AbsoluteLink(this.withoutAnchor().value + '#' + anchor)
   }
 
   // Returns another AbsoluteLink instance that uses the given file extension
-  withExtension(newExtension: string): AbsoluteLink {
+  public withExtension (newExtension: string): AbsoluteLink {
     const extRE = new RegExp(path.extname(this.value) + '$')
     return new AbsoluteLink(
       this.value.replace(extRE, addLeadingDotUnlessEmpty(newExtension))
@@ -93,7 +96,7 @@ export default class AbsoluteLink {
   }
 
   // Returns a link that is this link without the anchor
-  withoutAnchor(): AbsoluteLink {
+  public withoutAnchor (): AbsoluteLink {
     return new AbsoluteLink(this.value.split('#')[0])
   }
 }

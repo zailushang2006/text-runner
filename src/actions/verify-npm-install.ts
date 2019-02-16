@@ -5,7 +5,7 @@ import jsonfile from 'jsonfile'
 import path from 'path'
 import trimDollar from '../helpers/trim-dollar'
 
-export default function(args: ActionArgs) {
+export default function (args: ActionArgs) {
   const installText = trimDollar(args.nodes.textInNodeOfType('fence', 'code'))
   const pkg = jsonfile.readFileSync(
     path.join(args.configuration.sourceDir, 'package.json')
@@ -19,7 +19,7 @@ export default function(args: ActionArgs) {
   }
 }
 
-function missesPackageName(installText: string, packageName: string): boolean {
+function missesPackageName (installText: string, packageName: string): boolean {
   // Note: cannot use minimist here
   //       because it is too stupid to understand
   //       that NPM uses '-g' by itself, and not as a switch for the argument after it

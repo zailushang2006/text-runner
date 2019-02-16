@@ -4,7 +4,7 @@ import AstNode from '../../../ast-node'
 import AstNodeList from '../../../ast-node-list'
 import OpenTagTracker from '../../helpers/open-tag-tracker'
 
-export default function transformATag(
+export default function transformATag (
   node: any,
   openTags: OpenTagTracker,
   file: AbsoluteFilePath,

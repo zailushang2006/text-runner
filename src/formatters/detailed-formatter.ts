@@ -6,7 +6,7 @@ import Formatter from './formatter'
 export default class DetailedFormatter extends Formatter {
   // A detailed formatter, prints output before the step name
 
-  error(errorMessage: string) {
+  public error (errorMessage: string) {
     super.error(errorMessage)
     console.log(chalk.dim(this.output))
     process.stdout.write(
@@ -22,7 +22,7 @@ export default class DetailedFormatter extends Formatter {
     printCodeFrame(console.log, filePath, this.activity.line)
   }
 
-  skip(message: string) {
+  public skip (message: string) {
     super.skip(message)
     if (this.output) {
       console.log(chalk.dim(this.output))
@@ -36,7 +36,7 @@ export default class DetailedFormatter extends Formatter {
     )
   }
 
-  success() {
+  public success () {
     super.success()
     if (this.output) {
       console.log(chalk.dim(this.output))
@@ -50,7 +50,7 @@ export default class DetailedFormatter extends Formatter {
     )
   }
 
-  warning(warningMessage: string) {
+  public warning (warningMessage: string) {
     super.warning(warningMessage)
     if (this.output.trim() !== '') {
       console.log(chalk.dim(this.output))

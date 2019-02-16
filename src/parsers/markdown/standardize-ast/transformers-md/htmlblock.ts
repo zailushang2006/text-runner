@@ -8,7 +8,7 @@ import parseHtmlAttributes from '../../helpers/parse-html-attributes'
 const preRegex = /<pre([^>]*)>([\s\S]*)<\/pre>/m
 const tableRegex = /<table([^>]*)>[\s\S]*<\/table>/
 
-export default function(
+export default function (
   node: any,
   openTags: OpenTagTracker,
   file: AbsoluteFilePath,

@@ -2,7 +2,7 @@ import { Configuration } from '../configuration/configuration'
 import { ActionArgs } from '../runners/action-args'
 
 // Runs the async-await JavaScript code given in the code block
-export default function(args: ActionArgs) {
+export default function (args: ActionArgs) {
   args.formatter.name('run async javascript')
   let code = args.nodes.textInNodeOfType('fence')
   if (code == null) {
@@ -16,14 +16,14 @@ export default function(args: ActionArgs) {
   eval(code)
 }
 
-function wrapInAsyncFunction(code) {
+function wrapInAsyncFunction (code) {
   return `(async function() {
   ${code}
 })()`
 }
 
 // substitutes replacements configured in text-run.yml
-function replaceSubstitutions(code: string, c: Configuration): string {
+function replaceSubstitutions (code: string, c: Configuration): string {
   try {
     // Note: we can ignore undefined values here since `code` has a default value
     for (const replaceData of c.actions.runJavascript.replace) {
@@ -36,12 +36,12 @@ function replaceSubstitutions(code: string, c: Configuration): string {
 }
 
 // makes sure "require('.') works as expected even if running in a temp workspace
-function replaceRequireLocalModule(code: string): string {
+function replaceRequireLocalModule (code: string): string {
   return code.replace(/require\(['"].['"]\)/, 'require(process.cwd())')
 }
 
 // make variable declarations persist across code blocks
-function replaceVariableDeclarations(code: string): string {
+function replaceVariableDeclarations (code: string): string {
   return code
     .replace(/\bconst /g, 'global.')
     .replace(/\bvar /g, 'global.')

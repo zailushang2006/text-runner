@@ -5,7 +5,7 @@ import LinkTargetList from '../link-targets/link-target-list'
 import runActivity from './run-activity'
 import StatsCounter from './stats-counter'
 
-export default (async function executeSequential(
+export default (async function executeSequential (
   activities: ActivityList,
   configuration: Configuration,
   linkTargets: LinkTargetList,

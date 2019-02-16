@@ -6,13 +6,13 @@ import AstNode from '../parsers/ast-node'
 import AstNodeList from '../parsers/ast-node-list'
 
 export default class LinkTargetList {
-  targets: { [key: string]: LinkTarget[] }
+  public targets: { [key: string]: LinkTarget[] }
 
-  constructor() {
+  constructor () {
     this.targets = {}
   }
 
-  addNodeList(nodeList: AstNodeList) {
+  public addNodeList (nodeList: AstNodeList) {
     for (const node of nodeList) {
       const key = node.file.platformified()
       this.targets[key] = this.targets[key] || []
@@ -24,7 +24,7 @@ export default class LinkTargetList {
     }
   }
 
-  addAnchor(node: AstNode) {
+  public addAnchor (node: AstNode) {
     if (node.attributes.href !== undefined) {
       return
     }
@@ -34,7 +34,7 @@ export default class LinkTargetList {
     this.addLinkTarget(node.file, 'anchor', node.attributes.name)
   }
 
-  addHeading(node: AstNode, nodeList: AstNodeList) {
+  public addHeading (node: AstNode, nodeList: AstNodeList) {
     const content = nodeList.textInNode(node)
     if (!content) {
       return
@@ -42,7 +42,11 @@ export default class LinkTargetList {
     this.addLinkTarget(node.file, 'heading', content)
   }
 
-  addLinkTarget(filePath: AbsoluteFilePath, type: string, name: string) {
+  public addLinkTarget (
+    filePath: AbsoluteFilePath,
+    type: string,
+    name: string
+  ) {
     const key = filePath.platformified()
     this.targets[key] = this.targets[key] || []
     this.targets[key].push({
@@ -53,7 +57,7 @@ export default class LinkTargetList {
 
   // Returns the type of the given anchor
   // with the given name in the given file
-  anchorType(filePath: AbsoluteFilePath, name: string): string {
+  public anchorType (filePath: AbsoluteFilePath, name: string): string {
     const anchorsForFile = this.targets[filePath.platformified()]
     if (!anchorsForFile) {
       throw new Error(`no anchors in file ${filePath.platformified()}`)
@@ -67,7 +71,7 @@ export default class LinkTargetList {
     return anchor.type
   }
 
-  hasAnchor(filePath: AbsoluteFilePath, name: string): boolean {
+  public hasAnchor (filePath: AbsoluteFilePath, name: string): boolean {
     const fileList = this.targets[filePath.platformified()]
     if (!fileList) {
       return false
@@ -76,7 +80,7 @@ export default class LinkTargetList {
   }
 
   // Returns whether this link target list knows about the given file
-  hasFile(filePath: AbsoluteFilePath): boolean {
+  public hasFile (filePath: AbsoluteFilePath): boolean {
     return this.targets[filePath.platformified()] != null
   }
 }

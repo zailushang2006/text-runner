@@ -56,10 +56,13 @@
     "delay": "4.1.0",
     "dim-console": "0.4.4",
     "escope": "3.6.0",
+    "eslint": "4.19.1",
+    "eslint-plugin-typescript": "0.14.0",
     "mocha": "5.2.0",
     "ncp": "2.0.0",
     "nyc": "13.1.0",
-    "prettier": "1.15.3",
+    "prettier": "1.16.4",
+    "prettier-standard": "9.1.1",
     "ps-tree": "1.2.0",
     "remark-cli": "6.0.1",
     "remark-lint": "6.0.4",
@@ -68,12 +71,17 @@
     "semantic-release": "15.12.4",
     "semantic-release-cli": "4.0.12",
     "shelljs": "0.8.3",
+    "standard": "12.0.1",
     "standard-version": "4.4.0",
     "strip-ansi": "5.0.0",
     "tertestrial": "0.3.2",
     "ts-node": "7.0.1",
     "tslint": "5.11.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-config-standard": "8.0.1",
+    "tslint-plugin-prettier": "2.0.1",
     "typescript": "3.2.1",
+    "typescript-eslint-parser": "22.0.0",
     "uuid": "3.3.2"
   },
   "files": [
@@ -100,5 +108,21 @@
   "scripts": {
     "prepublishOnly": "make build",
     "test": "make spec"
+  },
+  "standard": {
+    "parser": "typescript-eslint-parser",
+    "plugins": [
+      "typescript"
+    ],
+    "rules": {
+      "typescript/no-unused-vars": [
+        "error",
+        {
+          "vars": "all",
+          "args": "after-used",
+          "ignoreRestSiblings": false
+        }
+      ]
+    }
   }
 }

@@ -7,7 +7,7 @@ import AstNode from '../parsers/ast-node'
 import AstNodeList from '../parsers/ast-node-list'
 import readAndParseFile from '../parsers/read-and-parse-file'
 
-async function debugCommand(config: Configuration): Promise<Error[]> {
+async function debugCommand (config: Configuration): Promise<Error[]> {
   const filenames = getFileNames(config)
   if (filenames.length === 0) {
     return []
@@ -56,7 +56,7 @@ async function debugCommand(config: Configuration): Promise<Error[]> {
   return []
 }
 
-function showAttr(node: AstNode): string {
+function showAttr (node: AstNode): string {
   if (node.type === 'text') {
     return `("${node.content.trim()}")`
   }

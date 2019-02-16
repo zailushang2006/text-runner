@@ -1,10 +1,10 @@
 import chalk from 'chalk'
 
-export default (async function helpCommand(error?: string) {
+export default (async function helpCommand (error?: string) {
   console.log(template(error))
 })
 
-function template(error: string | undefined) {
+function template (error: string | undefined) {
   if (error) {
     error = `${chalk.red(chalk.bold('Error: ' + error))}`
   }

@@ -6,7 +6,7 @@ import parseHtmlAttributes from '../../helpers/parse-html-attributes'
 
 const blockquoteRegex = /<blockquote([^>]*)>([\s\S]*)<\/blockquote>/m
 
-export default function(
+export default function (
   node: any,
   openTags: OpenTagTracker,
   file: AbsoluteFilePath,

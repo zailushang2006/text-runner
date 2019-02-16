@@ -4,7 +4,7 @@ import { CliArgTypes } from '../cli/cli-arg-types'
 import PrintedUserError from './../errors/printed-user-error'
 
 // Returns the filename for the config file based on the given
-export default function(constructorArgs: CliArgTypes): string {
+export default function (constructorArgs: CliArgTypes): string {
   if (constructorArgs.config == null) {
     return fs.existsSync('text-run.yml') ? 'text-run.yml' : ''
   }

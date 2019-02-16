@@ -5,7 +5,7 @@ import AstNodeList from '../parsers/ast-node-list'
 import { ActivityList } from './activity-list'
 
 // Returns all activities contained in the given collection of AstNodeLists
-export default function(ASTs: AstNodeList[], prefix: string): ActivityList {
+export default function (ASTs: AstNodeList[], prefix: string): ActivityList {
   let result: ActivityList = []
   for (const AST of ASTs) {
     result = result.concat(extractActivities(AST, prefix))
@@ -14,7 +14,7 @@ export default function(ASTs: AstNodeList[], prefix: string): ActivityList {
 }
 
 // Returns the activities contained in the given AstNodeList
-function extractActivities(AST: AstNodeList, prefix: string): ActivityList {
+function extractActivities (AST: AstNodeList, prefix: string): ActivityList {
   const result: ActivityList = []
   let activeNode: AstNode | null = null
   for (const node of AST) {
@@ -35,7 +35,7 @@ function extractActivities(AST: AstNodeList, prefix: string): ActivityList {
   return result
 }
 
-function ensureNoNestedActiveNode(node: AstNode, activeNode: AstNode | null) {
+function ensureNoNestedActiveNode (node: AstNode, activeNode: AstNode | null) {
   if (activeNode) {
     throw new UnprintedUserError(
       `${node.file.platformified()}: block ${node.type || ''} (line ${
@@ -47,11 +47,11 @@ function ensureNoNestedActiveNode(node: AstNode, activeNode: AstNode | null) {
   }
 }
 
-function isActiveBlockTag(node: AstNode, classPrefix: string): boolean {
+function isActiveBlockTag (node: AstNode, classPrefix: string): boolean {
   return !!node.attributes[classPrefix] && !node.type.endsWith('_close')
 }
 
-function isActiveBlockEndTag(
+function isActiveBlockEndTag (
   node: AstNode,
   activeNode: AstNode | null,
   prefix: string

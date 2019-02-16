@@ -9,7 +9,7 @@ import LinkTargetList from '../link-targets/link-target-list'
 import actionRepo from './action-repo'
 import StatsCounter from './stats-counter'
 
-export default (async function runActivity(
+export default (async function runActivity (
   activity: Activity,
   configuration: Configuration,
   linkTargets: LinkTargetList,
@@ -50,15 +50,15 @@ export default (async function runActivity(
   return null
 })
 
-async function runCallbackFunc(func: Action, args: ActionArgs) {
+async function runCallbackFunc (func: Action, args: ActionArgs) {
   const promisified = util.promisify(func)
   await promisified(args)
 }
 
-async function runSyncOrPromiseFunc(func: Action, args: ActionArgs) {
+async function runSyncOrPromiseFunc (func: Action, args: ActionArgs) {
   await Promise.resolve(func(args))
 }
 
-function isUserError(err: Error): boolean {
+function isUserError (err: Error): boolean {
   return err.name === 'Error'
 }

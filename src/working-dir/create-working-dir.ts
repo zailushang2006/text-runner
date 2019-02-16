@@ -9,14 +9,14 @@ const debug = deb('text-runner:working-dir')
 type workingDirSetting = string | boolean
 
 // Creates the temp directory to run the tests in
-export default function createWorkingDir(configSetting: workingDirSetting) {
+export default function createWorkingDir (configSetting: workingDirSetting) {
   const workingDir = getWorkingDirPath(configSetting)
   debug(`using test directory: ${workingDir}`)
   mkdirp.sync(workingDir)
   return workingDir
 }
 
-function getWorkingDirPath(setting): string {
+function getWorkingDirPath (setting): string {
   if (typeof setting === 'string') {
     return setting
   } else if (setting === false) {

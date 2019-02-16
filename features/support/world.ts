@@ -9,11 +9,11 @@ import path from 'path'
 import stripAnsi from 'strip-ansi'
 import { v4 as uuid } from 'uuid'
 
-const World = function() {
+const World = function () {
   // World provides step implementations that run and test TextRunner
   // via its command-line interface
 
-  this.execute = async function(params) {
+  this.execute = async function (params) {
     const args: any = {}
     args.cwd = this.rootDir
     args.env = {}
@@ -64,7 +64,7 @@ const World = function() {
     }
   }
 
-  this.fullTextRunPath = function() {
+  this.fullTextRunPath = function () {
     let result = path.join(process.cwd(), 'bin', 'text-run')
     if (process.platform === 'win32') {
       result += '.cmd'
@@ -193,17 +193,17 @@ ${actual}
 
 setWorldConstructor(World)
 
-function standardizePath(filePath: string): string {
+function standardizePath (filePath: string): string {
   return filePath.replace(/\\/g, '/')
 }
 
 // Returns the command that runs the given command with test coverage
-function runWithTestCoverage(command: string) {
+function runWithTestCoverage (command: string) {
   return path.join(process.cwd(), 'node_modules', '.bin', 'nyc') + ' ' + command
 }
 
 // store the test coverage data before running the next test that would overwrite it
-function storeTestCoverage() {
+function storeTestCoverage () {
   const outputPath = path.join(process.cwd(), '.nyc_output')
   if (fs.existsSync(outputPath)) {
     fs.moveSync(outputPath, path.join(process.cwd(), '.nyc_output_cli', uuid()))

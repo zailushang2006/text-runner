@@ -4,13 +4,15 @@ import addLeadingDotUnlessEmpty from '../helpers/add-leading-dot-unless-empty'
 import addLeadingSlash from '../helpers/add-leading-slash'
 import addTrailingSlash from '../helpers/add-trailing-slash'
 
+import AbsoluteFilePath from '../domain-model/absolute-file-path'
+
 // Defines the publication of a local file path to a public URL
 export default class Publication {
-  localPath: string
-  publicPath: string
-  publicExtension: string
+  public localPath: string
+  public publicPath: string
+  public publicExtension: string
 
-  constructor(localPath: string, publicPath: string, publicExtension: string) {
+  constructor (localPath: string, publicPath: string, publicExtension: string) {
     this.localPath = addLeadingSlash(addTrailingSlash(localPath))
     this.publicPath = addLeadingSlash(publicPath)
     this.publicExtension = addLeadingDotUnlessEmpty(publicExtension)
@@ -18,7 +20,7 @@ export default class Publication {
 
   // Returns the public link under which the given file path would be published
   // according to the rules of this publication
-  publish(localPath: AbsoluteFilePath): AbsoluteLink {
+  public publish (localPath: AbsoluteFilePath): AbsoluteLink {
     const re = new RegExp('^' + this.localPath)
     const linkPath = addLeadingSlash(localPath.unixified()).replace(
       re,
@@ -32,7 +34,7 @@ export default class Publication {
   }
 
   // Returns whether this publication applies to the given file path
-  publishes(localPath: AbsoluteFilePath): boolean {
+  public publishes (localPath: AbsoluteFilePath): boolean {
     return addLeadingSlash(addTrailingSlash(localPath.unixified())).startsWith(
       this.localPath
     )
@@ -40,7 +42,7 @@ export default class Publication {
 
   // returns the localPath for the given link,
   // mapped according to the rules of this publication
-  resolve(link: AbsoluteLink, defaultFile: string): AbsoluteFilePath {
+  public resolve (link: AbsoluteLink, defaultFile: string): AbsoluteFilePath {
     let result = link.rebase(this.publicPath, this.localPath)
     result = result.withoutAnchor()
 
@@ -59,9 +61,7 @@ export default class Publication {
   }
 
   // Returns whether this publication maps the given link
-  resolves(link: AbsoluteLink): boolean {
+  public resolves (link: AbsoluteLink): boolean {
     return link.value.startsWith(this.publicPath)
   }
 }
-
-import AbsoluteFilePath from '../domain-model/absolute-file-path'

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-export default (async function addCommand(
+export default (async function addCommand (
   blockName: string | undefined
 ): Promise<Error[]> {
   if (!blockName) {
@@ -18,7 +18,7 @@ export default (async function addCommand(
   return []
 })
 
-function template(filename: string) {
+function template (filename: string) {
   return `module.exports = async function (activity) {
   console.log('This code runs inside the "${filename}" block implementation.')
   console.log('I found these elements in your document:')

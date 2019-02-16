@@ -12,7 +12,7 @@ const debug = deb('start-console-command')
 
 // Runs the given commands on the console.
 // Leaves the command running.
-export default (async function(args: ActionArgs) {
+export default (async function (args: ActionArgs) {
   const commandsToRun = getCommandsToRun(args)
   args.formatter.name(
     `starting a long-running process: ${chalk.bold(chalk.cyan(commandsToRun))}`
@@ -27,7 +27,7 @@ export default (async function(args: ActionArgs) {
   )
 })
 
-function getCommandsToRun(args: ActionArgs) {
+function getCommandsToRun (args: ActionArgs) {
   return args.nodes
     .textInNodeOfType('fence')
     .split('\n')
@@ -38,7 +38,7 @@ function getCommandsToRun(args: ActionArgs) {
     .join(' && ')
 }
 
-function makeGlobal(configuration: Configuration) {
+function makeGlobal (configuration: Configuration) {
   configuration = configuration || {}
   let globals = {}
   try {
@@ -47,7 +47,7 @@ function makeGlobal(configuration: Configuration) {
     // we can ignore null-pointer exceptions here since we have a default value
   }
   debug(`globals: ${JSON.stringify(globals)}`)
-  return function(commandText) {
+  return function (commandText) {
     const commandParts = commandText.split(' ')
     const command = commandParts[0]
     debug(`searching for global replacement for ${command}`)

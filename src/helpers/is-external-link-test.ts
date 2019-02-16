@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import isExternalLink from './is-external-link'
 
-describe('isExternalLink', function() {
+describe('isExternalLink', function () {
   const testData = [
     ['link without protocol', '//foo.com', true],
     ['link with protocol', 'http://foo.com', true],
@@ -10,7 +10,7 @@ describe('isExternalLink', function() {
     ['relative link up', '../one.md', false]
   ]
   for (const [description, link, expected] of testData) {
-    it(description as string, function() {
+    it(description as string, function () {
       expect(isExternalLink(link as string)).to.equal(expected)
     })
   }

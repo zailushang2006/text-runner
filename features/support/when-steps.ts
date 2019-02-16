@@ -6,7 +6,7 @@ import util from 'util'
 When(
   /^(trying to execute|executing) the "([^"]+)" example$/,
   { timeout: 100000 },
-  async function(tryingText, exampleName) {
+  async function (tryingText, exampleName) {
     const expectError = determineExpectError(tryingText)
     const ncpp = util.promisify(ncp)
     await ncpp(
@@ -21,7 +21,7 @@ When(
   }
 )
 
-When(/^(trying to run|running) "([^"]*)"$/, async function(
+When(/^(trying to run|running) "([^"]*)"$/, async function (
   tryingText,
   command
 ) {
@@ -30,7 +30,7 @@ When(/^(trying to run|running) "([^"]*)"$/, async function(
   finish(expectError, this.process.error || this.process.exitCode)
 })
 
-When(/^(trying to run|running) text-run$/, async function(tryingText) {
+When(/^(trying to run|running) text-run$/, async function (tryingText) {
   const expectError = determineExpectError(tryingText)
   try {
     await this.execute({ command: 'run', cwd: this.rootDir, expectError })
@@ -46,7 +46,7 @@ When(/^(trying to run|running) text-run$/, async function(tryingText) {
 
 When(
   /^(trying to run|running) text-run with the arguments? "([^"]*)"$/,
-  async function(tryingText, optionsText) {
+  async function (tryingText, optionsText) {
     const expectError = determineExpectError(tryingText)
     const splitted = optionsText.split(' ')
     const command = splitted[0]
@@ -58,7 +58,7 @@ When(
 
 When(
   /^(trying to run|running) text-run with the arguments? {([^}]*)}$/,
-  async function(tryingText, argsText) {
+  async function (tryingText, argsText) {
     const expectError = determineExpectError(tryingText)
     const args = JSON.parse(`{${argsText}}`)
     args.command = 'run'
@@ -75,7 +75,7 @@ When(
 
 When(
   /^(trying to run|running) text-run with the "([^"]*)" formatter$/,
-  async function(tryingText, formatterName) {
+  async function (tryingText, formatterName) {
     const expectError = determineExpectError(tryingText)
     try {
       await this.execute({
@@ -91,7 +91,7 @@ When(
   }
 )
 
-When(/^(trying to run|running) the "([^"]*)" command$/, async function(
+When(/^(trying to run|running) the "([^"]*)" command$/, async function (
   tryingText,
   command
 ) {
@@ -104,7 +104,7 @@ When(/^(trying to run|running) the "([^"]*)" command$/, async function(
   )
 })
 
-function determineExpectError(tryingText) {
+function determineExpectError (tryingText) {
   if (tryingText === 'running') {
     return false
   } else if (tryingText === 'executing') {
@@ -114,7 +114,7 @@ function determineExpectError(tryingText) {
   }
 }
 
-function finish(trying, error) {
+function finish (trying, error) {
   if (trying && !error) {
     throw new Error('expected error but test succeeded')
   } else if (trying && error) {

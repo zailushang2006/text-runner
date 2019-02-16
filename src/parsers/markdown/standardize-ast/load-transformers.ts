@@ -4,7 +4,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import isJsFile from '../../../helpers/is-js-file'
 
-export default function loadTransformers(type: string): TransformerList {
+export default function loadTransformers (type: string): TransformerList {
   const result = {}
   const dir = path.join(
     __dirname,

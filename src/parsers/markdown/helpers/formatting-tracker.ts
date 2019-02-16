@@ -3,13 +3,13 @@ import AstNode from '../../ast-node'
 // FormattingTracker tracks formatting nodes
 // like 'em' and 'strong'
 export default class FormattingTracker {
-  tags: string[]
+  public tags: string[]
 
-  constructor() {
+  constructor () {
     this.tags = []
   }
 
-  register(node: AstNode): boolean {
+  public register (node: AstNode): boolean {
     let result = true
     if (node.type === 'em_open') {
       this.open('emphasized')
@@ -25,15 +25,15 @@ export default class FormattingTracker {
     return result
   }
 
-  open(tagName: string) {
+  public open (tagName: string) {
     this.tags.push(tagName)
   }
 
-  close(tagName: string) {
+  public close (tagName: string) {
     this.tags.splice(this.tags.indexOf(tagName), 1)
   }
 
-  toString(): string {
+  public toString (): string {
     return this.tags.sort().join('')
   }
 }

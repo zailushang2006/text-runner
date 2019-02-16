@@ -10,7 +10,7 @@ import parseCliArgs from './parse-cli-args'
 
 cliCursor.hide()
 
-async function main() {
+async function main () {
   const cliArgs = parseCliArgs(process.argv)
   const errors: Error[] = await textRunner(cliArgs)
   for (const err of errors) {
@@ -27,8 +27,8 @@ async function main() {
 }
 main()
 
-function printUserError(err: UnprintedUserError) {
-  const uErr = err as UnprintedUserError
+function printUserError (err: UnprintedUserError) {
+  const uErr = err
   if (uErr.filePath && uErr.line != null) {
     console.log(
       chalk.red(`${uErr.filePath}:${uErr.line} -- ${uErr.message || ''}`)

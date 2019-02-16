@@ -8,7 +8,7 @@ import path from 'path'
 import Formatter from '../formatters/formatter'
 
 // Checks for broken hyperlinks
-export default (async function(args: ActionArgs) {
+export default (async function (args: ActionArgs) {
   const node = args.nodes[0]
   let imagePath = node.attributes ? node.attributes.src : null
   if (!imagePath) {
@@ -25,7 +25,7 @@ export default (async function(args: ActionArgs) {
   }
 })
 
-async function checkLocalImage(imagePath: string, c: Configuration) {
+async function checkLocalImage (imagePath: string, c: Configuration) {
   try {
     await fs.stat(path.join(c.sourceDir, imagePath))
   } catch (err) {
@@ -33,7 +33,7 @@ async function checkLocalImage(imagePath: string, c: Configuration) {
   }
 }
 
-async function checkRemoteImage(url: string, f: Formatter, c: Configuration) {
+async function checkRemoteImage (url: string, f: Formatter, c: Configuration) {
   if (c.offline) {
     f.skip(`skipping external image: ${chalk.magenta(url)}`)
     return
@@ -51,7 +51,7 @@ async function checkRemoteImage(url: string, f: Formatter, c: Configuration) {
   }
 }
 
-function isRemoteImage(imagePath: string): boolean {
+function isRemoteImage (imagePath: string): boolean {
   if (imagePath != null) {
     return (
       imagePath.startsWith('//') ||

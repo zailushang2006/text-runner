@@ -7,7 +7,7 @@ import parseHtmlAttributes from '../../helpers/parse-html-attributes'
 
 const divRegex = /<div([^>]*)>([\s\S]*)<\/div>/m
 
-export default async function transformDiv(
+export default async function transformDiv (
   node: any,
   openTags: OpenTagTracker,
   file: AbsoluteFilePath,

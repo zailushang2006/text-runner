@@ -16,7 +16,7 @@ import removeLeadingSlash from '../helpers/remove-leading-slash'
 import LinkTargetList from '../link-targets/link-target-list'
 
 // Checks for broken hyperlinks
-export default (async function(args: ActionArgs) {
+export default (async function (args: ActionArgs) {
   const target = args.nodes[0].attributes.href
   if (target == null || target === '') {
     throw new Error('link without target')
@@ -64,7 +64,7 @@ export default (async function(args: ActionArgs) {
   )
 })
 
-async function checkExternalLink(
+async function checkExternalLink (
   target: string,
   f: Formatter,
   c: Configuration
@@ -92,7 +92,7 @@ async function checkExternalLink(
   }
 }
 
-async function checkLinkToFilesystem(
+async function checkLinkToFilesystem (
   containingFile: AbsoluteFilePath,
   target: string,
   f: Formatter,
@@ -131,7 +131,7 @@ async function checkLinkToFilesystem(
   }
 }
 
-async function checkLinkToAnchorInSameFile(
+async function checkLinkToAnchorInSameFile (
   containingFile: AbsoluteFilePath,
   target: string,
   linkTargets: LinkTargetList,
@@ -148,7 +148,7 @@ async function checkLinkToAnchorInSameFile(
   }
 }
 
-async function checkLinkToAnchorInOtherFile(
+async function checkLinkToAnchorInOtherFile (
   containingFile: AbsoluteFilePath,
   target: string,
   linkTargets: LinkTargetList,

@@ -13,19 +13,19 @@ interface Console {
 
 // Base class for formatters
 export default class Formatter {
-  activity: Activity
-  console: Console
-  sourceDir: string
-  statsCounter: StatsCounter
-  stderr: WriteStream
-  stdout: WriteStream
-  output: string
-  title: string
-  skipped: boolean
+  public activity: Activity
+  public console: Console
+  public sourceDir: string
+  public statsCounter: StatsCounter
+  public stderr: WriteStream
+  public stdout: WriteStream
+  public output: string
+  public title: string
+  public skipped: boolean
   // TODO: remove this?
-  warned: boolean
+  public warned: boolean
 
-  constructor(
+  constructor (
     activity: Activity,
     sourceDir: string,
     statsCounter: StatsCounter
@@ -44,32 +44,32 @@ export default class Formatter {
     }
   }
 
-  error(errorMessage: string) {
+  public error (errorMessage: string) {
     debug('error: ' + errorMessage)
     this.statsCounter.error()
   }
 
-  log(text: string | Buffer): boolean {
+  public log (text: string | Buffer): boolean {
     this.output += text.toString()
     return false
   }
 
-  skip(message: string) {
+  public skip (message: string) {
     debug('skipping: ' + message)
     this.skipped = true
     this.statsCounter.skip()
   }
 
-  success() {
+  public success () {
     this.statsCounter.success()
   }
 
   // allows the user to set a new name for this step
-  name(newTitle: string) {
+  public name (newTitle: string) {
     this.title = newTitle
   }
 
-  warning(warningMessage: string) {
+  public warning (warningMessage: string) {
     debug('warning: ' + warningMessage)
     this.warned = true
     this.statsCounter.warning()

@@ -2,9 +2,9 @@ import { expect } from 'chai'
 import AbsoluteFilePath from '../domain-model/absolute-file-path'
 import Publications from './publications'
 
-describe('Publications', function() {
-  describe('forFilePath', function() {
-    it('returns the publication that publishes the given FilePath', function() {
+describe('Publications', function () {
+  describe('forFilePath', function () {
+    it('returns the publication that publishes the given FilePath', function () {
       const publications = Publications.fromJSON([
         {
           localPath: 'foo',
@@ -22,7 +22,7 @@ describe('Publications', function() {
       expect(actual.localPath).to.equal('/bar/')
     })
 
-    it('returns NULL if no publication matches', function() {
+    it('returns NULL if no publication matches', function () {
       const publications = Publications.fromJSON([
         {
           localPath: 'foo',
@@ -36,8 +36,8 @@ describe('Publications', function() {
     })
   })
 
-  describe('sortPathMappings', function() {
-    it('returns the given publications sorted descending by publicPath', function() {
+  describe('sortPathMappings', function () {
+    it('returns the given publications sorted descending by publicPath', function () {
       const original = Publications.fromJSON([
         {
           localPath: '/content/',
@@ -66,7 +66,7 @@ describe('Publications', function() {
       expect(actual).to.eql(expected)
     })
 
-    it('works with empty mappings', function() {
+    it('works with empty mappings', function () {
       const publications = new Publications()
       expect(publications.sort()).to.eql([])
     })

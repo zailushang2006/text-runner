@@ -7,13 +7,13 @@ import RelativeLink from './relative-link'
 
 // A link that isn't known yet whether it is relative or absolute
 export default class UnknownLink {
-  value: string
+  public value: string
 
-  constructor(publicPath: string) {
+  constructor (publicPath: string) {
     this.value = removeDoubleSlash(unixify(publicPath))
   }
 
-  absolutify(
+  public absolutify (
     containingFile: AbsoluteFilePath,
     publications: Publications
   ): AbsoluteLink {
@@ -24,7 +24,7 @@ export default class UnknownLink {
   }
 
   // Returns whether this link is an absolute link
-  isAbsolute(): boolean {
+  public isAbsolute (): boolean {
     return this.value.startsWith('/')
   }
 }

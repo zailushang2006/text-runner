@@ -13,19 +13,19 @@ const htmlTagTransformers = loadTransformers('htmltag')
 // AstStandardizer converts the AST created by Remarkable
 // into the standardized AST used by TextRunner
 export default class AstStandardizer {
-  filepath: AbsoluteFilePath
-  openTags: OpenTagTracker
-  result: AstNodeList
-  line: number
+  public filepath: AbsoluteFilePath
+  public openTags: OpenTagTracker
+  public result: AstNodeList
+  public line: number
 
-  constructor(filepath: AbsoluteFilePath) {
+  constructor (filepath: AbsoluteFilePath) {
     this.filepath = filepath
     this.openTags = new OpenTagTracker()
     this.result = new AstNodeList()
     this.line = 1
   }
 
-  async standardize(ast: any): Promise<AstNodeList> {
+  public async standardize (ast: any): Promise<AstNodeList> {
     for (const node of ast) {
       if (node.lines) {
         this.line = Math.max(node.lines[0] + 1, this.line)
@@ -57,7 +57,7 @@ export default class AstStandardizer {
     return this.result
   }
 
-  async processHtmlBlock(node: any): Promise<boolean> {
+  public async processHtmlBlock (node: any): Promise<boolean> {
     if (node.type !== 'htmlblock') {
       return false
     }
@@ -86,7 +86,7 @@ export default class AstStandardizer {
     return true
   }
 
-  processHtmlTag(node: any): boolean {
+  public processHtmlTag (node: any): boolean {
     if (node.type !== 'htmltag') {
       return false
     }
@@ -115,7 +115,7 @@ export default class AstStandardizer {
     return true
   }
 
-  processMdNode(node: any): boolean {
+  public processMdNode (node: any): boolean {
     const transformer = mdTransformers[node.type]
     if (!transformer) {
       return false
@@ -132,7 +132,7 @@ export default class AstStandardizer {
     return true
   }
 
-  processSoftBreak(node: any): boolean {
+  public processSoftBreak (node: any): boolean {
     if (node.type !== 'softbreak') {
       return false
     }
@@ -141,7 +141,7 @@ export default class AstStandardizer {
   }
 }
 
-function alertUnknownNodeType(node, filepath: string, line: number): never {
+function alertUnknownNodeType (node, filepath: string, line: number): never {
   throw new UnprintedUserError(
     `AstStandardizer: unknown node type: ${node.type}`,
     filepath,

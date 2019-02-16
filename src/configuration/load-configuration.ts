@@ -26,7 +26,7 @@ const defaultValues: Configuration = {
 }
 
 // Reads documentation and
-export default function loadConfiguration(
+export default function loadConfiguration (
   configFilePath: string,
   constructorArgs: CliArgTypes
 ): Configuration {
@@ -37,7 +37,7 @@ export default function loadConfiguration(
   }
   debug(`configuration file data: ${JSON.stringify(this.fileData)}`)
 
-  function get(attributeName: string): string {
+  function get (attributeName: string): string {
     const camelized = camelCase(attributeName)
     return (
       constructorArgs[attributeName] ||

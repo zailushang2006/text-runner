@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import straightenLink from './straighten-link'
 
-describe('straightenPath', function() {
+describe('straightenPath', function () {
   const tests = {
     'goes upward': { '/one/../two': '/two' },
     'goes upward with double slash': { '/one//../two': '/two' },
@@ -12,7 +12,7 @@ describe('straightenPath', function() {
   }
   for (const [description, testData] of Object.entries(tests)) {
     const [input, expected] = Object.entries(testData)[0]
-    it(description, function() {
+    it(description, function () {
       expect(straightenLink(input)).to.equal(expected)
     })
   }

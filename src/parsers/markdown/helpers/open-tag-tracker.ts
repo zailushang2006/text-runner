@@ -4,13 +4,13 @@ import UnprintedUserError from '../../../errors/unprinted-user-error'
 import AstNode from '../../ast-node'
 
 export default class OpenTagTracker {
-  nodes: AstNode[]
+  public nodes: AstNode[]
 
-  constructor() {
+  constructor () {
     this.nodes = []
   }
 
-  add(node: AstNode) {
+  public add (node: AstNode) {
     const existingNode = this.peekType(node.type)
     if (existingNode && existingNode.attributes.textrun) {
       throw new UnprintedUserError(
@@ -24,15 +24,15 @@ export default class OpenTagTracker {
     this.nodes.push(node)
   }
 
-  has(nodeType: string): boolean {
+  public has (nodeType: string): boolean {
     return this.nodes.some(node => node.type === nodeType)
   }
 
-  peek(): AstNode {
+  public peek (): AstNode {
     return this.nodes[this.nodes.length - 1]
   }
 
-  peekType(expectedType: string): AstNode | null {
+  public peekType (expectedType: string): AstNode | null {
     for (let i = this.nodes.length - 1; i >= 0; i--) {
       const node = this.nodes[i]
       if (node.type === expectedType) {
@@ -42,7 +42,7 @@ export default class OpenTagTracker {
     return null
   }
 
-  popTag(expectedNodeTag: string, file: string, line: number): AstNode {
+  public popTag (expectedNodeTag: string, file: string, line: number): AstNode {
     if (this.nodes.length === 0) {
       throw new Error(
         `OpenTagTracker is empty while trying to pop tag '${expectedNodeTag}'`
@@ -63,7 +63,7 @@ export default class OpenTagTracker {
     )
   }
 
-  popType(
+  public popType (
     expectedNodeType: string,
     file: AbsoluteFilePath,
     line: number

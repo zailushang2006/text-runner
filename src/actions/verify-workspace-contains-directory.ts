@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 
 // Verifies that the test workspace contains the given directory
-export default function(args: ActionArgs) {
+export default function (args: ActionArgs) {
   const directory = args.nodes.text()
   const fullPath = path.join(args.configuration.workspace, directory)
   args.formatter.name(

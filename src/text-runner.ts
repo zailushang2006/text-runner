@@ -14,7 +14,7 @@ import versionCommand from './commands/version'
 import determineConfigFilename from './configuration/determine-config-filename'
 
 // Tests the documentation in the given directory
-export default async function(cmdLineArgs: CliArgTypes): Promise<Error[]> {
+export default async function (cmdLineArgs: CliArgTypes): Promise<Error[]> {
   let configuration
   try {
     configuration = loadConfiguration(
@@ -22,7 +22,7 @@ export default async function(cmdLineArgs: CliArgTypes): Promise<Error[]> {
       cmdLineArgs
     )
     const commandName = cmdLineArgs.command
-    let errors
+    let errors: Error[]
     switch (commandName) {
       case 'add':
         errors = await addCommand(cmdLineArgs.files)

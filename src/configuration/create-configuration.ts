@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-export default function createConfiguration() {
+export default function createConfiguration () {
   fs.writeFileSync(
     './text-run.yml',
     `# white-list for files to test

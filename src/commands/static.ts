@@ -11,7 +11,7 @@ import executeParallel from '../runners/execute-parallel'
 import StatsCounter from '../runners/stats-counter'
 import createWorkingDir from '../working-dir/create-working-dir'
 
-async function staticCommand(config: Configuration): Promise<Error[]> {
+async function staticCommand (config: Configuration): Promise<Error[]> {
   const stats = new StatsCounter()
 
   // step 0: create working dir

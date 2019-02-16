@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import mkdirp from 'mkdirp'
 import path from 'path'
 
-export default function(args: ActionArgs) {
+export default function (args: ActionArgs) {
   const directoryName = args.nodes.text().trim()
   if (!directoryName) {
     throw new Error('empty directory name given')

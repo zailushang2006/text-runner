@@ -19,7 +19,7 @@ interface ProcessInput {
 
 // Runs the given commands on the console.
 // Waits until the command is finished.
-export default (async function(args: ActionArgs) {
+export default (async function (args: ActionArgs) {
   const commandsToRun = args.nodes
     .textInNodeOfType('fence')
     .split('\n')
@@ -52,7 +52,7 @@ export default (async function(args: ActionArgs) {
   await processor.waitForEnd()
 })
 
-async function enter(processor: ObservableProcess, input: ProcessInput) {
+async function enter (processor: ObservableProcess, input: ProcessInput) {
   if (!input.textToWait) {
     processor.enter(input.input)
   } else {
@@ -61,7 +61,7 @@ async function enter(processor: ObservableProcess, input: ProcessInput) {
   }
 }
 
-function getInput(nodes: AstNodeList): ProcessInput[] {
+function getInput (nodes: AstNodeList): ProcessInput[] {
   if (!nodes) {
     return []
   }
@@ -86,7 +86,7 @@ function getInput(nodes: AstNodeList): ProcessInput[] {
   return result
 }
 
-function makeGlobal(configuration: Configuration) {
+function makeGlobal (configuration: Configuration) {
   configuration = configuration || {}
   let globals = {}
   try {
@@ -95,7 +95,7 @@ function makeGlobal(configuration: Configuration) {
     // can ignore errors here
   }
   debug(`globals: ${JSON.stringify(globals)}`)
-  return function(commandText) {
+  return function (commandText) {
     const commandParts = commandText.split(' ')
     const command = commandParts[0]
     debug(`searching for global replacement for ${command}`)

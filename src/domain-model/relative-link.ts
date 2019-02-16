@@ -5,15 +5,15 @@ import AbsoluteLink from './absolute-link'
 // A link relative to the current location,
 // i.e. a link not starting with '/'
 export default class RelativeLink {
-  value: string
+  public value: string
 
-  constructor(publicPath: string) {
+  constructor (publicPath: string) {
     this.value = publicPath
   }
 
   // Assuming this relative link is in the given file,
   // returns the absolute links that point to the same target as this relative link.
-  absolutify(
+  public absolutify (
     containingFile: AbsoluteFilePath,
     publications: Publications
   ): AbsoluteLink {

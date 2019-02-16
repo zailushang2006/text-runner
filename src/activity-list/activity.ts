@@ -10,7 +10,7 @@ export interface Activity {
   nodes: AstNodeList
 }
 
-export function scaffoldActivity(data: {
+export function scaffoldActivity (data: {
   type?: string
   nodes?: AstNodeList
   file?: string

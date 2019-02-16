@@ -19,13 +19,13 @@ class ActionRepo {
   private builtinActions: FunctionRepo
   private customActions: FunctionRepo
 
-  constructor() {
+  constructor () {
     this.builtinActions = this.loadBuiltinActions()
     this.customActions = this.loadCustomActions()
   }
 
   // Provides the action for the block with the given name
-  actionFor(activity: Activity): Action {
+  public actionFor (activity: Activity): Action {
     return (
       this.builtinActions[activity.type] ||
       this.customActions[activity.type] ||
@@ -35,7 +35,7 @@ class ActionRepo {
 
   // Note: need to define the return type as Action to satisfy the type checker
   //       who doesn't understand that this is an error check
-  private errorUnknownActivityType(activity: Activity): Action {
+  private errorUnknownActivityType (activity: Activity): Action {
     let errorText = `unknown activity type: ${chalk.red(
       activity.type
     )}\nAvailable built-in activity types:\n`
@@ -59,7 +59,7 @@ class ActionRepo {
     )
   }
 
-  private loadBuiltinActions(): FunctionRepo {
+  private loadBuiltinActions (): FunctionRepo {
     const result = {}
     for (const filename of this.builtinActionFilePaths()) {
       result[getActionName(filename)] = require(filename).default
@@ -67,7 +67,7 @@ class ActionRepo {
     return result
   }
 
-  private loadCustomActions(): FunctionRepo {
+  private loadCustomActions (): FunctionRepo {
     const result = {}
     require('babel-register')
     for (const filename of this.customActionFilePaths()) {
@@ -85,13 +85,13 @@ class ActionRepo {
     return result
   }
 
-  private builtinActionFilePaths(): string[] {
+  private builtinActionFilePaths (): string[] {
     return glob
       .sync(path.join(__dirname, '..', 'actions', '*.js'))
       .map(trimExtension)
   }
 
-  private customActionFilePaths(): string[] {
+  private customActionFilePaths (): string[] {
     const pattern = path.join(
       process.cwd(),
       'text-run',

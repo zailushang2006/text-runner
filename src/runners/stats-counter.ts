@@ -1,13 +1,13 @@
 import Time from 'time-diff'
 
 export default class StatsCounter {
-  errorCount: number
-  skipCount: number
-  successCount: number
-  warningCount: number
-  time: Time
+  public errorCount: number
+  public skipCount: number
+  public successCount: number
+  public warningCount: number
+  public time: Time
 
-  constructor() {
+  constructor () {
     this.errorCount = 0
     this.skipCount = 0
     this.successCount = 0
@@ -16,39 +16,39 @@ export default class StatsCounter {
     this.time.start('formatter')
   }
 
-  duration() {
+  public duration () {
     return this.time.end('formatter')
   }
 
-  error() {
+  public error () {
     this.errorCount += 1
   }
 
-  errors(): number {
+  public errors (): number {
     return this.errorCount
   }
 
-  skip() {
+  public skip () {
     this.skipCount += 1
   }
 
-  skips(): number {
+  public skips (): number {
     return this.skipCount
   }
 
-  success() {
+  public success () {
     this.successCount += 1
   }
 
-  successes(): number {
+  public successes (): number {
     return this.successCount
   }
 
-  warning() {
+  public warning () {
     this.warningCount += 1
   }
 
-  warnings(): number {
+  public warnings (): number {
     return this.warningCount
   }
 }

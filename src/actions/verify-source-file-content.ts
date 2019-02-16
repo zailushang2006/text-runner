@@ -6,7 +6,7 @@ import fs from 'fs'
 import jsdiffConsole from 'jsdiff-console'
 import path from 'path'
 
-export default function(args: ActionArgs) {
+export default function (args: ActionArgs) {
   const fileName = args.nodes.textInNodeOfType('strong_open')
   let relativeBaseDir = '.'
   if (args.nodes.hasNodeOfType('link_open')) {

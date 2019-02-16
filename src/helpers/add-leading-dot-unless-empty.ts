@@ -1,4 +1,4 @@
-export default function(text: string): string {
+export default function (text: string): string {
   if (text === '') {
     return text
   }

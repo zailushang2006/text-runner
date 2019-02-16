@@ -8,7 +8,7 @@ import util from 'util'
 
 const readFileP = util.promisify(fs.readFile)
 
-export default async function(args: ActionArgs) {
+export default async function (args: ActionArgs) {
   const filePath = args.nodes.textInNodeOfType('strong', 'em')
   const fullPath = path.join(process.cwd(), filePath)
   args.formatter.name(`verifying file ${chalk.cyan(filePath)}`)
@@ -26,7 +26,7 @@ export default async function(args: ActionArgs) {
   }
 }
 
-async function readFile(filePath: string, fullPath: string): Promise<string> {
+async function readFile (filePath: string, fullPath: string): Promise<string> {
   try {
     const result = await readFileP(fullPath, 'utf8')
     return result
